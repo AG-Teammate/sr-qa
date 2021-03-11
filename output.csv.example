@@ -1,0 +1,4 @@
+﻿Activity ID,Course,Lesson,Activity Type,Activity Number,Script,,correct_N,correct_REGEX_N,correctIndex,first_answer_words,first_answer_words_correct,first_answer_words_incorrect,first_answer_words_correct_percent_N,first_answer_words_incorrect_percent_N,RESULT
+ID-17241.6439625503062,en:German Core 1 Social,en:Jemanden begrüßen und sich vorstellen,HW_Form_P2_IVID63,101,Hallo.,,1,0,0,1,1,0,1,0,PASS
+ID-17241.6439625503062,en:German Core 1 Social,en:Jemanden begrüßen und sich vorstellen,HW_Form_P2_IVID63,101,Sehr gut!,,1,0,0,2,2,0,1,0,PASS
+ID-17241.6439621682280,en:German Core 1 Social,en:Jemanden begrüßen und sich vorstellen,HW_Form_P2_IVID63,103,Guten Morgen!,,1,0,0,2,2,0,1,0,PASS
