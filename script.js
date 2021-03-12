@@ -121,6 +121,7 @@ const getFilename = (r) =>
       );
       const apiRes = JSON.parse(await fs.promises.readFile(apiResFilename));
       const result = apiRes.privText;
+      r.API_TRANSCRIPT = result;
       const evaluation = evaluate(result, [text]);
       for (let k of Object.keys(evaluation)) {
         r[k] = evaluation[k];
