@@ -43,9 +43,16 @@ const writeCsv = async (filename, array) => {
 const fileExists = async (path) =>
   !!(await fs.promises.stat(path).catch(() => false));
 
+const getText = (r) => r[process.env.CSV_TEXT_COL];
+const getFilename = (r) =>
+  `${md5(getText(r))}-ms-${process.env.MS_LANGUAGE}.wav`; //TODO more STT providers?
+
+
 module.exports = {
   md5,
   readCsv,
   fileExists,
   writeCsv,
+  getText,
+  getFilename
 };

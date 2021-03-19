@@ -12,16 +12,19 @@
   "license": "private",
   "private": true,
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.9.0",
     "@fast-csv/format": "^4.3.5",
     "cli-progress": "^3.9.0",
     "csv-parser": "^3.0.0",
     "dotenv": "^8.2.0",
     "eslint": "^7.21.0",
+    "ffmpeg-cli": "^2.7.2",
     "md5": "^2.3.0",
     "microsoft-cognitiveservices-speech-sdk": "^1.15.1",
     "normalize-for-search": "^2.1.0",
     "normalize-text": "^2.3.2",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "slugify": "^1.4.7"
   },
   "devDependencies": {
     "eslint-config-prettier": "^8.1.0",

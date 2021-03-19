@@ -2,6 +2,8 @@ const cliProgress = require('cli-progress');
 const { readCsv } = require('./util');
 const path = require('path');
 const fs = require('fs');
+const { getFilename } = require('./util');
+const { getText } = require('./util');
 const { writeCsv } = require('./util');
 const { evaluate } = require('./evaluate');
 const { tts } = require('./ms-api');
@@ -9,9 +11,6 @@ const { stt } = require('./ms-api');
 const { md5 } = require('./util');
 const { fileExists } = require('./util');
 
-const getText = (r) => r[process.env.CSV_TEXT_COL];
-const getFilename = (r) =>
-  `${md5(getText(r))}-ms-${process.env.MS_LANGUAGE}.wav`; //TODO more STT providers?
 
 (async function main() {
   console.log(`Reading CSV...`);
