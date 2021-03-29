@@ -7,22 +7,33 @@ const stt = async (filename, text) => {
   const audioConfig = MsSdk.AudioConfig.fromAudioFileOutput(filename);
   const speechConfig = MsSdk.SpeechConfig.fromSubscription(
     process.env.MS_API_KEY,
-    process.env.MS_REGION
+    process.env.MS_REGION,
   );
   speechConfig.speechSynthesisLanguage = process.env.MS_LANGUAGE;
   speechConfig.speechSynthesisVoiceName = process.env.MS_VOICE;
   speechConfig.speechSynthesisOutputFormat =
     MsSdk.SpeechSynthesisOutputFormat.Riff16Khz16BitMonoPcm;
   let synthesizer = new MsSdk.SpeechSynthesizer(speechConfig, audioConfig);
+
+  const ssml = `
+    <speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='${process.env.MS_LANGUAGE}'>
+      <voice name='${process.env.MS_VOICE}'>
+        <prosody rate='+300.00%'>
+          <![CDATA[${text}]]>
+        </prosody>
+      </voice>
+    </speak>
+  `;
+
   await new Promise((resolve, reject) => {
-    synthesizer.speakTextAsync(
-      text,
+    synthesizer.speakSsmlAsync(
+      ssml,
       () => {
         synthesizer.close();
         synthesizer = undefined;
         resolve();
       },
-      reject
+      reject,
     );
   });
 };
@@ -33,10 +44,10 @@ const openPushStream = (filename) => {
 
   // open the file and push it to the push stream.
   fs.createReadStream(filename)
-    .on('data', function (arrayBuffer) {
+    .on('data', function(arrayBuffer) {
       pushStream.write(arrayBuffer.slice());
     })
-    .on('end', function () {
+    .on('end', function() {
       pushStream.close();
     });
 
@@ -45,11 +56,11 @@ const openPushStream = (filename) => {
 
 const tts = async (filename, text) => {
   const audioConfig = MsSdk.AudioConfig.fromStreamInput(
-    openPushStream(filename)
+    openPushStream(filename),
   );
   const speechConfig = MsSdk.SpeechConfig.fromSubscription(
     process.env.MS_API_KEY,
-    process.env.MS_REGION
+    process.env.MS_REGION,
   );
   speechConfig.speechRecognitionLanguage = process.env.MS_LANGUAGE;
   let recognizer = new MsSdk.SpeechRecognizer(speechConfig, audioConfig);
@@ -69,7 +80,7 @@ const tts = async (filename, text) => {
         recognizer.close();
         recognizer = undefined;
         reject(err);
-      }
+      },
     );
   });
 };
