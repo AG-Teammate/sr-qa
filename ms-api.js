@@ -18,8 +18,14 @@ const stt = async (filename, text) => {
   const ssml = `
     <speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='${process.env.MS_LANGUAGE}'>
       <voice name='${process.env.MS_VOICE}'>
-        <prosody rate='+300.00%'>
-          <![CDATA[${text}]]>
+        <prosody rate='+10.00%'>
+          ${text.replace(/[<>&"']/g, ch => ({
+    '<': '&lt;',
+    '>': '&gt;',
+    '&': '&amp;',
+    '"': '&quot;',
+    '\'': '&apos;',
+  })[ch])}
         </prosody>
       </voice>
     </speak>
@@ -28,10 +34,14 @@ const stt = async (filename, text) => {
   await new Promise((resolve, reject) => {
     synthesizer.speakSsmlAsync(
       ssml,
-      () => {
+      (res) => {
         synthesizer.close();
         synthesizer = undefined;
-        resolve();
+        if (res.privAudioData?.byteLength) {
+          resolve();
+        } else {
+          reject(res.privErrorDetails);
+        }
       },
       reject,
     );
